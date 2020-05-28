@@ -1,0 +1,9 @@
+<div *ngFor="let item of questions">
+    <p class="question">{{item.question}}</p>
+    <div *ngFor="let options of item.options">
+        <p class="option-div" (click)="onOptionClick(options)">
+
+            {{options.option}}
+        </p>
+    </div>
+</div>

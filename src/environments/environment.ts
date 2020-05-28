@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  chatBotToken: 'efc56df083e44f6091262600a142fb6a'
 };
 
 /*

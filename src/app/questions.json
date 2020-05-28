@@ -1,0 +1,65 @@
+{
+    "data": {
+        "question_id": "q1",
+        "q1": {
+            "question": "How May i help you?",
+            "options": [
+                {
+                    "option": "List out the services",
+                    "optionId": "W1"
+                },
+                {
+                    "option": "Exit",
+                    "optionId": "WSN2"
+                }
+            ]
+        },
+        "W1": {
+            "question": "Which service you would like to add?",
+            "question_id": "q2",
+            "options": [
+                {
+                    "option": "Spa",
+                    "optionId": "WS1"
+                },
+                {
+                    "option": "Haircut",
+                    "optionId": "WH2"
+                }
+            ]
+        },
+        "WS1": {
+            "question": "Are you sure that you want to have Spa?",
+            "question_id": "q3",
+            "options": [
+                {
+                    "option": "Yes",
+                    "optionId": "WSS1"
+                },
+                {
+                    "option": "No",
+                    "optionId": "WSN2"
+                }
+            ]
+        },
+        "WSN2": {
+            "question": "Thank you. Visit Again!",
+            "question_id": "q4",
+            "options": []
+        },
+        "B2": {
+            "question": "Would you like to exit?",
+            "question_id": "q3",
+            "options": [
+                {
+                    "option": "Yes",
+                    "optionId": "BY1"
+                },
+                {
+                    "option": "No",
+                    "optionId": "BH2"
+                }
+            ]
+        }
+    }
+}

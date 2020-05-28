@@ -1,0 +1,11 @@
+<h1>Angular bot</h1>
+
+<div *ngFor="let msg of messages">
+    <div class="message" [ngClass]="{'from': msg.sentBy === 'bot', 'to': msg.sentBy === 'user'}">
+        {{msg.content}}
+    </div>
+</div>
+<label for="nameField">Your Message</label>
+<input type="text" name="messge" [(ngModel)]="formValue" (keyup.enter)="sendMessage()"> <br>
+
+<button (click)="sendMessage()">SEND</button>
