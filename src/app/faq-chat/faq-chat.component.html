@@ -1,9 +1,60 @@
-<div *ngFor="let item of questions">
+<!-- <div *ngFor="let item of questions">
     <p class="question">{{item.question}}</p>
     <div *ngFor="let options of item.options">
-        <p class="option-div" (click)="onOptionClick(options)">
-
+        <p class="option-div" (click)="onOptionClick(options, item.question_id)">
             {{options.option}}
         </p>
     </div>
-</div>
+</div> -->
+<!-- <div class="float-right option-div" *ngFor="let item of answers">
+            {{item.option}}
+        </div> -->
+
+
+<section class="msger">
+    <main class="msger-chat" *ngFor="let item of questions">
+        <div class="msg left-msg">
+            <div class="msg-img" style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)">
+            </div>
+
+            <div class="msg-bubble">
+                <div class="msg-info">
+                    <div class="msg-info-name">CAM</div>
+                    <div class="msg-info-time">{{date | date: 'M/d/yy, h:mm a'}}</div>
+                </div>
+
+                <div class="msg-text">
+                    {{item.question}}
+                </div>
+                <div class="msg-text" *ngFor="let options of item.options; let i=index">
+                    <div (click)="onOptionClick(options, item.question_id)">
+                        {{i+1}}: {{options.option}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="msg right-msg" *ngFor="let answer of answers">
+            <div *ngIf="item.question_id == answer.questionId">
+
+                <div class="msg-img" style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)">
+                </div>
+
+                <div class="msg-bubble">
+                    <div class="msg-info">
+                        <div class="msg-info-name">Customer</div>
+                        <div class="msg-info-time">{{date | date: 'M/d/yy, h:mm a'}}</div>
+                    </div>
+
+                    <div class="msg-text">
+                        {{answer.selectedOption.option}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <form class="msger-inputarea">
+        <input type="text" class="msger-input" placeholder="Enter your message...">
+        <button type="submit" class="msger-send-btn">Send</button>
+    </form>
+</section>
