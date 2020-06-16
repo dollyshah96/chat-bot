@@ -1,0 +1,40 @@
+<div style="margin: 20px;">
+    <h4>Add Questions</h4>
+    <input type="text" class="msger-input input-text" [(ngModel)]="questionObj.question" placeholder="Enter Question">
+    <input type="text" class="msger-input input-text" [(ngModel)]="questionObj.option1" placeholder="Option 1">
+    <input type="text" class="msger-input input-text" [(ngModel)]="questionObj.option2" placeholder="Option 2">
+
+    <button type="submit" (click)="onAdd()">ADD QUES</button>
+
+    <div class="w-50 ng" *ngIf="questions.length>0">
+        <h4>Add Sub Questions</h4>
+        <select [(ngModel)]="questionId" (change)="getOptions()">
+            <option value="0" selected>Select Question</option>
+            <option *ngFor="let item of questions" [value]="item.parent_id">
+                {{item.question}}
+            </option>
+        </select>
+        <select *ngIf="options.length>0" [(ngModel)]="optionId">
+            <option value="0" selected>Select Options</option>
+            <option *ngFor="let item of options" [value]="item.optionId">
+                {{item.option}}
+            </option>
+        </select>
+        <div *ngIf="optionId">
+            <input type="text" class="msger-input input-text" [(ngModel)]="subQuestionObj.question"
+                placeholder="Enter Question">
+            <input type="text" class="msger-input input-text" [(ngModel)]="subQuestionObj.option1"
+                placeholder="Option 1">
+            <input type="text" class="msger-input input-text" [(ngModel)]="subQuestionObj.option2"
+                placeholder="Option 2">
+            <button type="submit" (click)="onSubAdd()">ADD SUB QUES</button>
+        </div>
+
+    </div>
+</div>
+
+
+
+<!-- <button type="submit" (click)="onSubmit()">SUBMIT</button> -->
+
+<!-- {{questions | json}} -->

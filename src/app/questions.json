@@ -1,9 +1,8 @@
 {
-    "data": {
-        "question_id": "q1",
-        "q1": {
+    "data": [
+        {
             "question": "How May i help you?",
-            "question_id": "q1",
+            "parent_id": "q1",
             "options": [
                 {
                     "option": "List out the services",
@@ -15,9 +14,9 @@
                 }
             ]
         },
-        "W1": {
+        {
             "question": "Which service you would like to add?",
-            "question_id": "q2",
+            "parent_id": "W1",
             "options": [
                 {
                     "option": "Spa",
@@ -29,9 +28,9 @@
                 }
             ]
         },
-        "WS1": {
+        {
             "question": "Are you sure that you want to have Spa?",
-            "question_id": "q3",
+            "parent_id": "WS1",
             "options": [
                 {
                     "option": "Yes",
@@ -43,24 +42,10 @@
                 }
             ]
         },
-        "WSN2": {
+        {
             "question": "Thank you. Visit Again!",
-            "question_id": "q4",
+            "parent_id": "WSN2",
             "options": []
-        },
-        "B2": {
-            "question": "Would you like to exit?",
-            "question_id": "q3",
-            "options": [
-                {
-                    "option": "Yes",
-                    "optionId": "BY1"
-                },
-                {
-                    "option": "No",
-                    "optionId": "BH2"
-                }
-            ]
         }
-    }
+    ]
 }

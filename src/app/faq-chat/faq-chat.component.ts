@@ -8,34 +8,33 @@ import * as questionJson from '../questions.json';
 })
 export class FaqChatComponent implements OnInit {
   constructor() { }
+  public questionObj = {
+    question: null, option1: null, option2: null
+  };
+  test: string
   questions = [];
   answers = [];
   date = new Date();
   ngOnInit(): void {
-
-
-
-    const key = questionJson.data.question_id;
-    const obj = {
-      question: questionJson.data[`${key}`]['question'],
-      question_id: questionJson.data[`${key}`]['question_id'],
-      options: questionJson.data[`${key}`]['options'],
-    }
+    const parent_id = questionJson.data[0].parent_id;
+    const obj = questionJson.data.find(e => e.parent_id == parent_id);
     this.questions.push(obj);
   }
 
-  onOptionClick(option, question_id) {
+  onOptionClick(option, parent_id) {
     this.date = new Date();
 
-    const parentIndex = this.questions.findIndex(e => e.question_id == question_id);
+    const parentIndex = this.questions.findIndex(e => e.parent_id == parent_id);
     const obj = {
       selectedOption: option,
-      questionId: question_id
+      parent_id: parent_id
     }
     this.answers.push(obj);
     this.questions[parentIndex]['options'] = [];
-    const key = option.optionId;
-    this.questions.push(questionJson.data[`${key}`]);
+    const next_parent_id = option.optionId;
+    const nextQuestion = questionJson.data.find(e => e.parent_id == next_parent_id);
+
+    this.questions.push(nextQuestion);
 
     // const childIndex = this.questions[parentIndex].options.findIndex(e => e.optionId == option.optionId);
     // this.questions[parentIndex]['options'][childIndex].selectedAns = option;
@@ -44,7 +43,25 @@ export class FaqChatComponent implements OnInit {
     //   const childIndex = this.questions[parentIndex].options.findIndex(e => e.optionId == ele.optionId);
     //   this.questions[parentIndex]['options'].splice(childIndex, 1);
     // });
+  }
 
+  onAdd() {
+    console.log(this.questionObj);
+
+    const obj = {
+      question: this.questionObj.question,
+      question_id: Math.floor(Math.random() * 100),
+      options: [
+        {
+          option: this.questionObj.option1,
+          optionId: Math.floor(Math.random() * 100)
+        },
+        {
+          option: this.questionObj.option2,
+          optionId: Math.floor(Math.random() * 100)
+        }
+      ]
+    }
   }
 }
 
