@@ -1,8 +1,53 @@
-<question-form></question-form>
-
+<div class="chatbot-box-main">
+    <div class="chatbot-header">
+        <label class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="customCheck" name="example1">
+            <span class="custom-control-label text-danger" for="customCheck">OMIT</span>
+        </label>
+    </div>
+    <div class="chatbot-box">
+        <div *ngFor="let item of questions;let questionIndex = index">
+            <div class="sender-msg">
+                <span class="image-block">
+                    <img src="assets/image/chat-user.svg" alt="">
+                </span>
+                <div class="msg-block">
+                    <p class="msg-header">
+                        <b class="bold">Cam</b> <span class="date-time">05/29/20, 6:13 PM</span>
+                    </p>
+                    <div class="msg-body">
+                        {{item.question}}
+                    </div>
+                    <div class="msg-body" *ngFor="let option of item.options; let optionIndex=index">
+                        <div (click)="onOptionClick(optionIndex, option.optionId, questionIndex)">
+                            {{optionIndex+1}}: {{option.option}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="my-msg" *ngIf="item.selectedOption">
+                <div class="msg-block">
+                    <p class="msg-header">
+                        <b class="bold">Customer</b> <span class="date-time">05/29/20, 6:13 PM</span>
+                    </p>
+                    <div class="msg-body">
+                        {{item.selectedOption}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="chatbox-enter-text">
+        <button class="btn left btn-dark btn-icon text-uppercase"><i class="fa fa-arrow-left"></i></button>
+        <input type="text" class="form-control" placeholder="Type a Message">
+        <button class="btn btn-dark btn-save text-uppercase">save</button>
+        <button class="btn right btn-dark btn-icon text-uppercase"><i class="fa fa-arrow-right"></i></button>
+    </div>
+</div>
 
 
 <!-- <section class="msger">
+
     <main class="msger-chat" *ngFor="let item of questions">
         <div class="msg left-msg">
             <div class="msg-img" style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)">

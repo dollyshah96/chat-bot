@@ -1,6 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import * as questionJson from '../questions.json';
 
+interface IQuestions {
+  options: IOptions[];
+  parent_id: string;
+  selectedOption: string;
+  selectedOptionId?: string;
+  question: string;
+}
+interface IOptions {
+  option: string;
+  optionId: string;
+  isAlreadyParent?: boolean;
+}
 @Component({
   selector: 'faq-chat',
   templateUrl: './faq-chat.component.html',
@@ -8,60 +20,39 @@ import * as questionJson from '../questions.json';
 })
 export class FaqChatComponent implements OnInit {
   constructor() { }
-  public questionObj = {
-    question: null, option1: null, option2: null
-  };
-  test: string
-  questions = [];
-  answers = [];
+  questions: IQuestions[] = [];
   date = new Date();
+
   ngOnInit(): void {
-    const parent_id = questionJson.data[0].parent_id;
-    const obj = questionJson.data.find(e => e.parent_id == parent_id);
-    this.questions.push(obj);
-  }
-
-  onOptionClick(option, parent_id) {
-    this.date = new Date();
-
-    const parentIndex = this.questions.findIndex(e => e.parent_id == parent_id);
-    const obj = {
-      selectedOption: option,
-      parent_id: parent_id
-    }
-    this.answers.push(obj);
-    this.questions[parentIndex]['options'] = [];
-    const next_parent_id = option.optionId;
-    const nextQuestion = questionJson.data.find(e => e.parent_id == next_parent_id);
-
-    this.questions.push(nextQuestion);
-
-    // const childIndex = this.questions[parentIndex].options.findIndex(e => e.optionId == option.optionId);
-    // this.questions[parentIndex]['options'][childIndex].selectedAns = option;
-    // const removeItems = this.questions[parentIndex].options.filter(e => e.optionId != option.optionId);
-    // removeItems.map(ele => {
-    //   const childIndex = this.questions[parentIndex].options.findIndex(e => e.optionId == ele.optionId);
-    //   this.questions[parentIndex]['options'].splice(childIndex, 1);
-    // });
-  }
-
-  onAdd() {
-    console.log(this.questionObj);
-
-    const obj = {
-      question: this.questionObj.question,
-      question_id: Math.floor(Math.random() * 100),
-      options: [
-        {
-          option: this.questionObj.option1,
-          optionId: Math.floor(Math.random() * 100)
-        },
-        {
-          option: this.questionObj.option2,
-          optionId: Math.floor(Math.random() * 100)
+    const data = questionJson.data;
+    if (data[0].selectedOption) {
+      data.map(e => {
+        if (e.selectedOption) {
+          this.questions.push(e);
         }
-      ]
+      });
+      const lengthOfQuestions = this.questions.length - 1;
+      const lastOptionSelectedId = this.questions[lengthOfQuestions].selectedOptionId;
+      this.getNextQuestion(lastOptionSelectedId);
+    } else {
+      this.questions.push(data[0]);
     }
+
+  }
+
+  onOptionClick(optionIndex: number, optionId: string, parentIndex: string) {
+    this.date = new Date();
+    const selectedOption = this.questions[parentIndex].options[optionIndex];
+
+    this.questions[parentIndex].selectedOption = selectedOption.option;
+    this.questions[parentIndex].selectedOptionId = selectedOption.optionId;
+
+    this.getNextQuestion(parentIndex);
+  }
+
+  getNextQuestion(questionId: string) {
+    const nextQuestion = questionJson.data.find(e => e.parent_id == questionId);
+    this.questions.push(nextQuestion);
   }
 }
 
