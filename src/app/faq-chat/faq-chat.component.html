@@ -1,4 +1,5 @@
-<div class="chatbot-box-main">
+<div class="chatbot-box-main" *ngFor="let item of dataPiece; let parentIndex=index">
+    <h1>{{item?.Account_No}}</h1>
     <div class="chatbot-header">
         <label class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="customCheck" name="example1">
@@ -6,7 +7,7 @@
         </label>
     </div>
     <div class="chatbot-box">
-        <div *ngFor="let item of questions;let questionIndex = index">
+        <div *ngFor="let question of item.chatbot;let chatbotIndex = index">
             <div class="sender-msg">
                 <span class="image-block">
                     <img src="assets/image/chat-user.svg" alt="">
@@ -16,22 +17,25 @@
                         <b class="bold">Cam</b> <span class="date-time">05/29/20, 6:13 PM</span>
                     </p>
                     <div class="msg-body">
-                        {{item.question}}
+                        {{question.question}}
                     </div>
-                    <div class="msg-body" *ngFor="let option of item.options; let optionIndex=index">
-                        <div (click)="onOptionClick(optionIndex, option.optionId, questionIndex)">
-                            {{optionIndex+1}}: {{option.option}}
+                    <div *ngIf="!question.selectedOption">
+                        <div class="msg-body" *ngFor="let option of question.options; let optionIndex=index">
+                            <div
+                                (click)="onOptionClick(optionIndex, question.parent_id, parentIndex, chatbotIndex,option)">
+                                {{optionIndex+1}}: {{option.option}}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="my-msg" *ngIf="item.selectedOption">
+            <div class="my-msg" *ngIf="question.selectedOption">
                 <div class="msg-block">
                     <p class="msg-header">
                         <b class="bold">Customer</b> <span class="date-time">05/29/20, 6:13 PM</span>
                     </p>
                     <div class="msg-body">
-                        {{item.selectedOption}}
+                        {{question.selectedOption}}
                     </div>
                 </div>
             </div>
