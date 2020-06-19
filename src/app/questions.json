@@ -6,6 +6,7 @@
                 "parent_id": "q1",
                 "selectedOption": null,
                 "selectedOptionId": null,
+                "messages": [],
                 "options": [
                     {
                         "option": "List out the services",
@@ -22,6 +23,7 @@
                 "parent_id": "W1",
                 "selectedOption": null,
                 "selectedOptionId": null,
+                "messages": [],
                 "options": [
                     {
                         "option": "Spa",
@@ -38,6 +40,7 @@
                 "parent_id": "WS1",
                 "selectedOption": null,
                 "selectedOptionId": null,
+                "messages": [],
                 "options": [
                     {
                         "option": "Yes",
@@ -52,6 +55,7 @@
             {
                 "question": "Thank you. Visit Again!",
                 "parent_id": "WSN2",
+                "messages": [],
                 "selectedOptionId": null,
                 "selectedOption": null,
                 "options": []

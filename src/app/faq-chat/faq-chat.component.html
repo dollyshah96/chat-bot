@@ -29,6 +29,17 @@
                     </div>
                 </div>
             </div>
+
+            <div class="my-msg" *ngIf="question.messages?.length>0">
+                <div class="msg-block" *ngFor="let message of question.messages">
+                    <p class="msg-header">
+                        <b class="bold">Customer</b> <span class="date-time">05/29/20, 6:13 PM</span>
+                    </p>
+                    <div class="msg-body">
+                        {{message}}
+                    </div>
+                </div>
+            </div>
             <div class="my-msg" *ngIf="question.selectedOption">
                 <div class="msg-block">
                     <p class="msg-header">
@@ -42,10 +53,10 @@
         </div>
     </div>
     <div class="chatbox-enter-text">
-        <button class="btn left btn-dark btn-icon text-uppercase"><i class="fa fa-arrow-left"></i></button>
-        <input type="text" class="form-control" placeholder="Type a Message">
-        <button class="btn btn-dark btn-save text-uppercase">save</button>
-        <button class="btn right btn-dark btn-icon text-uppercase"><i class="fa fa-arrow-right"></i></button>
+        <button class="btn left btn-dark btn-icon text-uppercase">Prev</button>
+        <input type="text" class="form-control" [(ngModel)]="message" placeholder="Type a Message">
+        <button class="btn btn-dark btn-save text-uppercase" (click)="onSave(parentIndex)">save</button>
+        <button class="btn right btn-dark btn-icon text-uppercase">Next</button>
     </div>
 </div>
 
