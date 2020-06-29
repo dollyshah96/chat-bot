@@ -2,11 +2,10 @@
     "data": {
         "chatbot": [
             {
-                "question": "How May i help you?",
+                "message": "How May i help you?",
                 "parent_id": "q1",
-                "selectedOption": null,
-                "selectedOptionId": null,
-                "messages": [],
+                "sender": null,
+                "QuestionCompleted": false,
                 "options": [
                     {
                         "option": "List out the services",
@@ -19,11 +18,10 @@
                 ]
             },
             {
-                "question": "Which service you would like to add?",
+                "message": "Which service you would like to add?",
                 "parent_id": "W1",
-                "selectedOption": null,
-                "selectedOptionId": null,
-                "messages": [],
+                "sender": null,
+                "QuestionCompleted": false,
                 "options": [
                     {
                         "option": "Spa",
@@ -36,11 +34,10 @@
                 ]
             },
             {
-                "question": "Are you sure that you want to have Spa?",
+                "message": "Are you sure that you want to have Spa?",
                 "parent_id": "WS1",
-                "selectedOption": null,
-                "selectedOptionId": null,
-                "messages": [],
+                "sender": null,
+                "QuestionCompleted": false,
                 "options": [
                     {
                         "option": "Yes",
@@ -53,11 +50,10 @@
                 ]
             },
             {
-                "question": "Thank you. Visit Again!",
+                "message": "Thank you. Visit Again!",
                 "parent_id": "WSN2",
-                "messages": [],
-                "selectedOptionId": null,
-                "selectedOption": null,
+                "sender": null,
+                "QuestionCompleted": false,
                 "options": []
             }
         ]

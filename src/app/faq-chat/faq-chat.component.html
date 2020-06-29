@@ -1,111 +1,40 @@
-<div class="chatbot-box-main" *ngFor="let item of dataPiece; let parentIndex=index">
-    <h1>{{item?.Account_No}}</h1>
-    <div class="chatbot-header">
-        <label class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="customCheck" name="example1">
-            <span class="custom-control-label text-danger" for="customCheck">OMIT</span>
-        </label>
-    </div>
-    <div class="chatbot-box">
-        <div *ngFor="let question of item.chatbot;let chatbotIndex = index">
-            <div class="sender-msg">
-                <span class="image-block">
-                    <img src="assets/image/chat-user.svg" alt="">
-                </span>
-                <div class="msg-block">
-                    <p class="msg-header">
-                        <b class="bold">Cam</b> <span class="date-time">05/29/20, 6:13 PM</span>
-                    </p>
-                    <div class="msg-body">
-                        {{question.question}}
-                    </div>
-                    <div *ngIf="!question.selectedOption">
-                        <div class="msg-body" *ngFor="let option of question.options; let optionIndex=index">
-                            <div
-                                (click)="onOptionClick(optionIndex, question.parent_id, parentIndex, chatbotIndex,option)">
-                                {{optionIndex+1}}: {{option.option}}
-                            </div>
+<div class="chatbot-box-main" *ngFor="let item of dataPiece; let accountIndex=index">
+    <h3>Account Number: {{item.Account_No}}</h3>
+    <div class="chatbot-box" *ngFor="let chat of item.chatbot; let chatIndex = index">
+        <div class="sender-msg" *ngIf="chat.sender == 'CAM'">
+            <div class="msg-block">
+                <p class="msg-header">
+                    <b class="bold">Cam</b> <span class="date-time">05/29/20, 6:13 PM</span>
+                </p>
+                <div class="msg-body">
+                    {{chat.message}}
+                </div>
+
+                <div>
+                    <div class="msg-body" *ngFor="let option of chat.options; let optionIndex=index">
+                        <div (click)="onOptionClick(option, chat.parent_id, accountIndex, chatIndex)">
+                            {{optionIndex+1}}: {{option.option}}
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="my-msg" *ngIf="question.messages?.length>0">
-                <div class="msg-block" *ngFor="let message of question.messages">
-                    <p class="msg-header">
-                        <b class="bold">Customer</b> <span class="date-time">05/29/20, 6:13 PM</span>
-                    </p>
-                    <div class="msg-body">
-                        {{message}}
-                    </div>
-                </div>
-            </div>
-            <div class="my-msg" *ngIf="question.selectedOption">
-                <div class="msg-block">
-                    <p class="msg-header">
-                        <b class="bold">Customer</b> <span class="date-time">05/29/20, 6:13 PM</span>
-                    </p>
-                    <div class="msg-body">
-                        {{question.selectedOption}}
-                    </div>
+        <div class="my-msg" *ngIf="chat.sender == 'YOU'">
+            <div class="msg-block">
+                <p class="msg-header">
+                    <b class="bold">Customer</b> <span class="date-time">05/29/20, 6:13 PM</span>
+                </p>
+                <div class="msg-body">
+                    {{chat.message}}
                 </div>
             </div>
         </div>
     </div>
     <div class="chatbox-enter-text">
         <button class="btn left btn-dark btn-icon text-uppercase">Prev</button>
-        <input type="text" class="form-control" [(ngModel)]="message" placeholder="Type a Message">
-        <button class="btn btn-dark btn-save text-uppercase" (click)="onSave(parentIndex)">save</button>
+        <input type="text" class="form-control" [(ngModel)]="item.Note" placeholder="Type a Message">
+        <button class="btn btn-dark btn-save text-uppercase" (click)="saveNote(accountIndex, item.Note)">save</button>
         <button class="btn right btn-dark btn-icon text-uppercase">Next</button>
     </div>
 </div>
-
-
-<!-- <section class="msger">
-
-    <main class="msger-chat" *ngFor="let item of questions">
-        <div class="msg left-msg">
-            <div class="msg-img" style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)">
-            </div>
-
-            <div class="msg-bubble">
-                <div class="msg-info">
-                    <div class="msg-info-name">CAM</div>
-                    <div class="msg-info-time">{{date | date: 'M/d/yy, h:mm a'}}</div>
-                </div>
-
-                <div class="msg-text">
-                    {{item.question}}
-                </div>
-                <div class="msg-text" *ngFor="let options of item.options; let i=index">
-                    <div (click)="onOptionClick(options, item.parent_id)">
-                        {{i+1}}: {{options.option}}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="msg right-msg" *ngFor="let answer of answers">
-            <div *ngIf="item.parent_id == answer.parent_id">
-
-                <div class="msg-img" style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)">
-                </div>
-
-                <div class="msg-bubble">
-                    <div class="msg-info">
-                        <div class="msg-info-name">Customer</div>
-                        <div class="msg-info-time">{{date | date: 'M/d/yy, h:mm a'}}</div>
-                    </div>
-
-                    <div class="msg-text">
-                        {{answer.selectedOption.option}}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-    <form class="msger-inputarea">
-        <input type="text" class="msger-input" placeholder="Enter your message...">
-        <button type="submit" class="msger-send-btn">Send</button>
-    </form>
-</section> -->

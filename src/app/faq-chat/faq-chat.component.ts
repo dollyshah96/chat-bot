@@ -2,17 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import * as questionJson from '../questions.json';
 
 interface IQuestions {
-  options?: IOptions[];
-  parent_id?: string;
-  selectedOption?: string;
-  selectedOptionId?: string;
-  question?: string;
-  messages?: string[]
+  options: IOptions[];
+  parent_id: string;
+  message: string;
+  sender: string;
+  QuestionCompleted: boolean;
 }
 interface IOptions {
   option: string;
   optionId: string;
-  isAlreadyParent?: boolean;
+}
+interface IdataPiece {
+  Note: string;
+  Account_No: number;
+  chatbot: IQuestions[];
 }
 @Component({
   selector: 'faq-chat',
@@ -21,125 +24,17 @@ interface IOptions {
 })
 export class FaqChatComponent implements OnInit {
   parsedQuestions: { chatbot: IQuestions[] };
-  chatbotIndex: any;
   constructor() { }
-  questions: IQuestions[] = [];
-  // dataPiece: { Account_No: number, chatbot: IQuestions[] }[] = [
-
-  //   {
-  //     Account_No: 2,
-  //     chatbot: [
-  //       {
-  //         "question": "How May i help you?",
-  //         "parent_id": "q1",
-  //         "selectedOption": "Exit",
-  //         "selectedOptionId": "WSN2",
-  //         "options": [
-  //           {
-  //             "option": "List out the services",
-  //             "optionId": "W1"
-  //           },
-  //           {
-  //             "option": "Exit",
-  //             "optionId": "WSN2"
-  //           }
-  //         ]
-  //       },
-  //       {
-  //         "question": "Thank you. Visit Again!",
-  //         "parent_id": "WSN2",
-  //         "selectedOptionId": null,
-  //         "selectedOption": null,
-  //         "options": []
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     Account_No: 1,
-  //     chatbot: []
-  //   },
-  // ];
-  dataPiece: { Account_No: number, chatbot: IQuestions[], currentChatbotIndex: number }[] = [
+  dataPiece: IdataPiece[] = [
     {
-      Account_No: 0,
-      chatbot: [],
-      currentChatbotIndex: 0
-    },
-    {
-      Account_No: 1,
-      currentChatbotIndex: 0,
-      // messages: [],
-      chatbot: [
-        {
-          messages: [],
-          question: "How May i help you?",
-          parent_id: "q1",
-          selectedOption: "List out the services",
-          selectedOptionId: "W1",
-          options: [
-            {
-              option: "List out the services",
-              optionId: "W1"
-            },
-            {
-              option: "Exit",
-              optionId: "WSN2"
-            }
-          ],
-        },
-        {
-          question: "Which service you would like to add?",
-          parent_id: "W1",
-          selectedOption: "Spa",
-          selectedOptionId: "WS1",
-          options: [
-            {
-              option: "Spa",
-              optionId: "WS1"
-            },
-            {
-              option: "Haircut",
-              optionId: "WH2"
-            }
-          ],
-          messages: []
-        },
-        {
-          messages: [],
-          question: "Are you sure that you want to have Spa?",
-          parent_id: "WS1",
-          selectedOption: "No",
-          selectedOptionId: "WSN2",
-          options: [
-            {
-              option: "Yes",
-              optionId: "WSS1"
-            },
-            {
-              option: "No",
-              optionId: "WSN2"
-            }
-          ]
-        },
-        {
-          messages: [],
-          question: "Thank you. Visit Again!",
-          parent_id: "WSN2",
-          selectedOptionId: null,
-          selectedOption: null,
-          options: []
-        }
-      ]
-    },
-    {
+      Note: '',
       Account_No: 2,
-      currentChatbotIndex: 0,
       chatbot: [
         {
-          question: "How May i help you?",
+          "QuestionCompleted": true,
+          "message": "How May i help you?",
+          "sender": 'CAM',
           "parent_id": "q1",
-          "selectedOption": "Exit",
-          "selectedOptionId": "WSN2",
           "options": [
             {
               "option": "List out the services",
@@ -152,51 +47,84 @@ export class FaqChatComponent implements OnInit {
           ]
         },
         {
-          "question": "Thank you. Visit Again!",
-          "parent_id": "WSN2",
-          "selectedOptionId": null,
-          "selectedOption": null,
-          "options": []
+
+          "QuestionCompleted": true,
+          "message": "Goodnight",
+          "sender": 'YOU',
+          "parent_id": "q1",
+          "options": [
+          ]
+        },
+      ]
+    },
+    {
+      Note: '',
+      Account_No: 1,
+      chatbot: [
+        {
+          "QuestionCompleted": false,
+          "message": "How May i help you?",
+          "sender": 'CAM',
+          "parent_id": "q1",
+          "options": [
+            {
+              "option": "List out the services",
+              "optionId": "W1"
+            },
+            {
+              "option": "Exit",
+              "optionId": "WSN2"
+            }
+          ]
         }
       ]
-    }
+    },
   ];
-  message: string;
 
   ngOnInit(): void {
-    localStorage.setItem('chatbot-ques', JSON.stringify(questionJson.data));
-    this.dataPiece.map((acc, index) => {
-      if (acc.chatbot.length == 0) {
-        this.parsedQuestions = JSON.parse(localStorage.getItem('chatbot-ques'));
-        console.log(this.parsedQuestions);
-
-        this.dataPiece[index].chatbot.push(this.parsedQuestions.chatbot[0]);
-      }
-    });
+    // localStorage.setItem('chatbot-ques', JSON.stringify(questionJson.data));
+    this.parsedQuestions = questionJson.data;
   }
 
-  onOptionClick(optionIndex: number, parent_id: string, parentIndex: number, chatbotIndex: number) {
+  getNextQuestion(questionId: string, parentIndex) {
 
-    const askedQuestion = this.parsedQuestions.chatbot.find(e => e.parent_id == parent_id)
-    const selectedOption = askedQuestion.options[optionIndex];
-    // if (!askedQuestion.selectedOption) {
-    this.dataPiece[parentIndex].chatbot[chatbotIndex].selectedOption = selectedOption.option;
-    this.getNextQuestion(selectedOption.optionId, parentIndex, chatbotIndex);
-
-    // }
-  }
-
-  getNextQuestion(questionId: string, parentIndex, chatbotIndex) {
     const nextQuestion = this.parsedQuestions.chatbot.find(e => e.parent_id == questionId);
-    this.dataPiece[parentIndex].chatbot.push(nextQuestion);
-    // this.chatbotIndex = chatbotIndex
-    this.dataPiece[parentIndex].currentChatbotIndex = chatbotIndex;
+    const obj = {
+      message: nextQuestion.message,
+      sender: 'CAM',
+      parent_id: nextQuestion.parent_id,
+      options: nextQuestion.options,
+      QuestionCompleted: false
+    }
+    this.dataPiece[parentIndex].chatbot.push(obj);
   }
 
-  onSave(parentIndex: number) {
-    const currentChatbotIndex = this.dataPiece[parentIndex].currentChatbotIndex ? this.dataPiece[parentIndex].currentChatbotIndex : 0;
-    console.log(this.dataPiece[parentIndex].chatbot);
-    this.dataPiece[parentIndex].chatbot[currentChatbotIndex].messages.push(this.message);
+  saveNote(accountIndex: number, note: string) {
+    const obj = {
+      message: `Your Note: ${note}`,
+      sender: 'YOU',
+      parent_id: 'note',
+      options: [],
+      QuestionCompleted: true
+    }
+    this.dataPiece[accountIndex].Note = null;
+    this.dataPiece[accountIndex].chatbot.push(obj);
+  }
+
+  onOptionClick(option, parent_id: string, accountIndex: number, chatIndex: number) {
+    if (!this.dataPiece[accountIndex].chatbot[chatIndex].QuestionCompleted) {
+      this.dataPiece[accountIndex].chatbot[chatIndex].QuestionCompleted = true;
+      const obj = {
+        message: option.option,
+        QuestionCompleted: true,
+        sender: 'YOU',
+        parent_id: parent_id,
+        options: []
+      }
+      this.dataPiece[accountIndex].chatbot.push(obj);
+      this.getNextQuestion(option.optionId, accountIndex);
+    }
+    console.log(this.dataPiece);
   }
 }
 
